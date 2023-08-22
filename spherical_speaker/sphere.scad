@@ -52,7 +52,7 @@ module shell(){
         }
         box();
         
-        translate([0,-wall+1,speaker_depth/2-speaker_z_flat_height])
+        translate([0,-wall+2,speaker_depth/2-speaker_z_flat_height])
         rotate([90,0,0]){
             include <dayton_pc83-4.scad>
         }

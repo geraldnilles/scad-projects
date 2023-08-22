@@ -11,7 +11,7 @@ bolt_depth = 15;
 bolt_height = 5;
 
 plate_diamter = 101;
-plate_height = 2;
+plate_height = 4;
 
 roundover_radius = 25/6;
 
