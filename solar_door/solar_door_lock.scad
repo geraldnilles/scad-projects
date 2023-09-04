@@ -8,14 +8,15 @@ pcb_x = 27;
 pcb_y = 28;
 pcb_z = 11;
 
-screw_diamter = 4;
+screw_diamter = 3;
 screw_head_diamter = 8;
 screw_height = 15;
 
+box_corner_radius = 5;
 
-window_width_rel = 0.9;
+window_width_rel = 0.93;
 
-$fn=100;
+$fn=70;
 
 
 module solar_cell(){
@@ -55,6 +56,54 @@ module screws(){
         screw();
 }
 
-solar_cell();
-pcb();
-screws();
+module box(){
+    difference(){
+        hull(){
+            translate([solar_cell_x/2+pcb_x,solar_cell_y/2,0])
+                sphere(r=box_corner_radius);
+            translate([solar_cell_x/2+pcb_x,-solar_cell_y/2,0])
+                sphere(r=box_corner_radius);
+            translate([-solar_cell_x/2,solar_cell_y/2,0])
+                sphere(r=box_corner_radius);
+            translate([-solar_cell_x/2,-solar_cell_y/2,0])
+                sphere(r=box_corner_radius);
+            translate([solar_cell_x/2+pcb_x,solar_cell_y/2,-pcb_z])
+                sphere(r=box_corner_radius);
+            translate([solar_cell_x/2+pcb_x,-solar_cell_y/2,-pcb_z])
+                sphere(r=box_corner_radius);
+            translate([-solar_cell_x/2,solar_cell_y/2,-pcb_z])
+                sphere(r=box_corner_radius);
+            translate([-solar_cell_x/2,-solar_cell_y/2,-pcb_z])
+                sphere(r=box_corner_radius);
+            
+        }
+        // Cut off the bottom rounded edge
+        // Pick a very large dimension for cutting an entire plane
+        big = solar_cell_x*3;
+        translate([-big/2,-big/2,-big-pcb_z+solar_cell_z])
+            cube([big,big,big]);
+        
+        scale([window_width_rel,window_width_rel,2])
+            solar_cell();
+        
+        hull(){
+            solar_cell();
+            translate([0,0,-big])
+            solar_cell();
+        }
+        
+        hull(){
+            pcb();
+            translate([0,0,-big])
+            pcb();
+        }
+        
+        screws();
+        
+    }
+}
+
+//solar_cell();
+//pcb();
+//screws();
+box();
