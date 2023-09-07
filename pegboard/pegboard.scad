@@ -6,11 +6,33 @@ wall_thickness = 0.4*3;
 $fn=20;
 
 module peg_lower_support(){
-    hull(){
-        translate([0,0,-hole_pitch])
-            sphere(d=hole_diameter+1);
-        translate([0,board_thickness*2,-hole_pitch])
-            sphere(d=hole_diameter);
+    // Thickness of the slot
+    slot = hole_diameter/4;
+    // 
+    snap_offset = board_thickness+2;
+    // Shift everything Down 1 peg hole
+    translate([0,0,-hole_pitch]){
+        difference(){
+            union(){
+                hull(){
+                    sphere(d=hole_diameter+1);
+                    translate([0,board_thickness*2,0])
+                        sphere(d=hole_diameter);
+                
+                }
+                translate([slot,snap_offset,0])
+                    rotate([-90,0,0])
+                        cylinder( h=hole_diameter,
+                            d1=hole_diameter,d2=1);
+                translate([-slot,snap_offset,0])
+                    rotate([-90,0,0])
+                        cylinder( h=hole_diameter,
+                            d1=hole_diameter,d2=1);
+            }
+            translate([-slot/2,0,-hole_diameter]){
+                cube([slot,board_thickness*3,hole_diameter*2]);
+            }
+        }
     }
     
 }
@@ -56,6 +78,8 @@ module peg_plate(){
         peg_plate_sharp();
         sphere(0.25,$fn=5);
     }
+    translate([0,-hole_diameter,-hole_pitch-hole_diameter/2-0.25])
+        cylinder(0.2,5);
 }
 
 module peg_hook_template(){
