@@ -3,44 +3,44 @@ include <pegboard.scad>;
 
 external_plate();
 
-prong_gap = 5; 
-prong_diameter = 5;
-prong_length = 35;
-prong_angle = 25;
+$fn=50;
 
+module hook(){
+hook_diameter = 7;
+    depth = 25;
+    
+    
+    
+    translate([0,0,-hole_pitch+hole_diameter]){
+        hull(){
+            sphere(d=hook_diameter);
+            translate([0,-depth,0]){
+                sphere(d=hook_diameter);
+                
 
-module prong(){
-    difference(){
-        rotate([-prong_angle,0,0]){
-            hull(){
-                sphere(d=prong_diameter);
-                translate([0,-prong_length,0])
-                    sphere(d=prong_diameter);
             }
+
         }
-        translate([-prong_diameter,-wall_thickness/2,-prong_diameter]){
-            cube(prong_diameter*2);
+        hull(){
+            translate([0,-depth,0]){
+                sphere(d=hook_diameter);
+                translate([0,-hook_diameter,hook_diameter])
+                    sphere(d=hook_diameter/2);
+
+
+            }
         }
     }
 }
 
 module main(){
-    translate([0,0,-hole_pitch/2]){
-        translate([prong_gap*2,0,0])
-            prong();
-        translate([-prong_gap*2,0,0])
-            prong();
-        
-        prong();
-    }
-    translate([0,-prong_diameter*3/5,-hole_pitch/2])
-        hull(){
-        translate([-2*prong_diameter,0,0])
-            sphere(d=prong_diameter);
-        translate([2*prong_diameter,0,0])
-            sphere(d=prong_diameter);
-        }
+    hook();
     
 }
 
-main();
+difference(){
+    main();
+    huge=100;
+    translate([0,huge/2-1,0])
+    cube(huge,center=true);
+}
