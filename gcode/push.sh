@@ -3,7 +3,8 @@
 set -e
 
 mount /dev/sdb1 /mnt
-cp *.gcode /mnt
+rsync -ru . /mnt/
 sync
 umount /mnt
 
+echo "SDCard Updated"

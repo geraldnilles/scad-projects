@@ -3,8 +3,8 @@ include <pegboard.scad>;
 
 external_plate();
 
-$fn=50;
-hook_pitch = 9;
+$fn=40;
+hook_pitch = 15;
 hook_width = hook_pitch*3/5;
 hook_diameter = 7;
 
@@ -15,7 +15,7 @@ module hook(){
     
     
     
-    translate([0,0,-hole_pitch+hole_diameter]){
+    translate([0,0,-hole_diameter]){
         hull(){
             translate([(hook_width-d)/2,0,0])
                 sphere(d=d);
@@ -34,7 +34,7 @@ module hook(){
             translate([0,-depth,0]){
                 sphere(d=hook_width);
                 translate([0,-hook_diameter,hook_diameter])
-                    sphere(d=d/2);
+                    sphere(d=d);
 
 
             }
@@ -42,11 +42,39 @@ module hook(){
     }
 }
 
+module loop(){
+    translate([0,-hole_pitch/2+hole_diameter/2,-hole_pitch+hole_diameter]){
+        rotate([35,0,0]){
+            rotate_extrude(){
+                translate([(hole_pitch-hole_diameter)/2,0,0]){
+                    circle(d=hole_diameter);
+                }
+            }
+        }
+    }
+    /*
+    
+    rotate([35,0,0])
+        minkowski(){
+            difference(){
+                cylinder(h=hole_diameter/2,d=hole_pitch,center=true);
+                cylinder(h=hole_diameter/2+1,d=hole_pitch-hole_diameter,center=true);
+
+            }
+            sphere(1);
+        }
+    */
+}
+
 module main(){
-    hook();
-    translate([hook_pitch,0,0])
+    
+        
+    
+    loop();
+    
+    translate([hook_pitch/2,0,0])
         hook();
-    translate([-hook_pitch,0,0])
+    translate([-hook_pitch/2,0,0])
         hook();
     
 }

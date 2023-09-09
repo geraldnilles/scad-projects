@@ -1,7 +1,7 @@
 hole_pitch = 25.4;
 hole_diameter = 5;
 board_thickness = 5;
-wall_thickness = 0.4*3;
+wall_thickness = 0.6*3;
 
 $fn=20;
 
@@ -15,7 +15,8 @@ module peg_lower_support(){
         difference(){
             union(){
                 hull(){
-                    sphere(d=hole_diameter+1);
+                    translate([0,0,0.5])
+                        sphere(d=hole_diameter+1);
                     translate([0,board_thickness*2,0])
                         sphere(d=hole_diameter);
                 
@@ -78,8 +79,8 @@ module peg_plate(){
         peg_plate_sharp();
         sphere(0.25,$fn=5);
     }
-    translate([0,-hole_diameter,-hole_pitch-hole_diameter/2-0.25])
-        cylinder(0.2,5);
+    translate([0,-hole_diameter*3/2,-hole_pitch-hole_diameter/2-0.25])
+        cylinder(0.2,r=5);
 }
 
 module peg_hook_template(){
@@ -109,8 +110,15 @@ module external_plate(){
     z = hole_pitch+hole_diameter+wall_thickness;
     
     difference(){
-        translate([-x/2,-wall_thickness,-z+hole_diameter/2+wall_thickness*1.5])
+        translate([-x/2,-wall_thickness,-z+hole_diameter/2+wall_thickness*1.5]){
             cube([x, y, z]);
+            brim_z=0.2;
+            brim_r=5;
+            for(a=[0,x]){
+            translate([a,0,z-brim_z])
+                cylinder(h=brim_z,r=brim_r);
+            }
+        }
         minkowski(){
             translate([0,hole_diameter,0])
                 peg_plate();
@@ -119,20 +127,19 @@ module external_plate(){
     }
     
     // Push-off ribs.  These will push against the wall as it is inserted to toeh hook adapter, creating a snug fit
-    rib_width = 2;
-    hull(){
-        translate([x/3,hole_diameter-rib_width,-hole_pitch])
-            cube(rib_width);
-        translate([x/3,hole_diameter,0])
-            cube(rib_width);
+    rib_width = 3;
+    for(a = [x/3, -x/3]){
+        hull(){
+            translate([a,hole_diameter-rib_width/2,rib_width])
+                sphere(d=rib_width/2);
+            translate([a,hole_diameter-rib_width/2,-hole_pitch])
+                sphere(d=rib_width);
+            translate([a,hole_diameter,0])
+                sphere(d=rib_width);
+        }
     }
     
-    hull(){
-        translate([-x/3-rib_width,hole_diameter-rib_width,-hole_pitch])
-            cube(rib_width);
-        translate([-x/3-rib_width,hole_diameter,0])
-            cube(rib_width);
-    }
+    
     
 }
 
