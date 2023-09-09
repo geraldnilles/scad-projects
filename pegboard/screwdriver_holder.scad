@@ -1,5 +1,6 @@
 
 include <pegboard.scad>;
+include <../primitives/chamfers.scad>;
 
 external_plate();
 
@@ -15,7 +16,7 @@ module hook(){
     
     
     
-    translate([0,0,-hole_diameter]){
+    translate([0,0,-hole_diameter+d]){
         hull(){
             translate([(hook_width-d)/2,0,0])
                 sphere(d=d);
@@ -43,12 +44,18 @@ module hook(){
 }
 
 module loop(){
-    translate([0,-hole_pitch/2+hole_diameter/2,-hole_pitch+hole_diameter]){
+    translate([0,-hole_pitch/2+hole_diameter,-hole_pitch+hole_diameter]){
         rotate([35,0,0]){
-            rotate_extrude(){
-                translate([(hole_pitch-hole_diameter)/2,0,0]){
-                    circle(d=hole_diameter);
+            scale([1.0,1.2,1])
+            difference(){
+                rotate_extrude(){
+                    translate([(hole_pitch-hole_diameter)/2,0,0]){
+                        circle(d=hole_diameter);
+                    }
                 }
+                translate([-hole_pitch/2,
+                           -hole_pitch/2,hole_diameter/5])
+                    cube(hole_pitch);
             }
         }
     }
@@ -83,5 +90,7 @@ difference(){
     main();
     huge=100;
     translate([0,huge/2-1,0])
-    cube(huge,center=true);
+        cube(huge,center=true);
+    translate([0,0,huge/2+hole_diameter+0.2])
+        cube(huge,center=true);
 }

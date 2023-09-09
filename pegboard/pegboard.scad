@@ -80,7 +80,7 @@ module peg_plate(){
         sphere(0.25,$fn=5);
     }
     translate([0,-hole_diameter*3/2,-hole_pitch-hole_diameter/2-0.25])
-        cylinder(0.2,r=5);
+        cylinder(0.2,r=7);
 }
 
 module peg_hook_template(){
@@ -113,7 +113,7 @@ module external_plate(){
         translate([-x/2,-wall_thickness,-z+hole_diameter/2+wall_thickness*1.5]){
             cube([x, y, z]);
             brim_z=0.2;
-            brim_r=5;
+            brim_r=7;
             for(a=[0,x]){
             translate([a,0,z-brim_z])
                 cylinder(h=brim_z,r=brim_r);
