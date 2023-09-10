@@ -5,8 +5,8 @@ include <../primitives/chamfers.scad>;
 external_plate();
 
 $fn=40;
-hook_pitch = 15;
-hook_width = hook_pitch*3/5;
+hook_pitch = 17;
+hook_width = hook_pitch*0.4;
 hook_diameter = 7;
 
 depth = 25;
