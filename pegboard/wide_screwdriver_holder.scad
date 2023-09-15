@@ -60,5 +60,7 @@ difference(){
     huge=100;
     translate([0,huge/2+1,0])
         cube(huge,center=true);
+    translate([0,-depth*0.35,hook_pitch*1/3])
+        cylinder(h=hole_pitch,d1=hook_pitch*0.6, d2=hook_pitch*1.3);
 
 }
