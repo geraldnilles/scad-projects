@@ -61,6 +61,17 @@ module peg_hook(){
                 cube(hole_pitch,center=true);
         }
     }
+    // Add Fin support that is to be snipped off
+    hull(){
+        d1 = 1;
+        d2 = 0.6;
+        translate([0,0,-hole_diameter/2])
+            sphere(d=d2);
+        translate([0,board_thickness,-hole_diameter/2])
+            sphere(d=d2);
+        translate([0,0,-hole_diameter/2-board_thickness])
+            sphere(d=d2);
+    }
     
 }
 
