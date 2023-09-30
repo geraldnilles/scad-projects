@@ -5,8 +5,8 @@ include <../primitives/chamfers.scad>;
 
 $fn = 20;
 
-length_mm = 70;
-spacing_mm = 75;
+drill_diameter = 60;
+spacing_mm = 77;
 
 nozzle_width = 0.6;
 wall_layers = 10;
@@ -24,28 +24,25 @@ module plate(){
 }    
 
 module hook(){
-    x = nozzle_width*wall_layers;
-    z = x*2;
-    translate([-x/2,-length_mm,0]){
-        translate([spacing_mm/2,0,0]){
-            chamfered_cube(x,length_mm,z,2);
-            rotate([25,0,0])
-                chamfered_cube(x,x,z*2,2);
-            
-        }
-        translate([-spacing_mm/2,0,0]){
-            chamfered_cube(x,length_mm,z,2);
-            rotate([25,0,0])
-                chamfered_cube(x,x,z*2,2);
-        }
-    }
+    translate([-4,-20,0])
+    chamfered_cube(8,20,10,2);
+    $fn=6;
+    translate([0,-35,29.7])
+    rotate([-90,-0,90])
+    rotate_extrude(angle=180)
+        translate([drill_diameter/2,0,0])
+            rotate([0,0,30])
+            circle(d=10);
     
 }
 
 
 module main(){        
     plate();
-    hook();
+    translate([-spacing_mm/2,0,0])
+        hook();
+    translate([spacing_mm/2,0,0])
+        hook();
     
     translate([0,0,hole_diameter/2]){
         for ( x = [-1,0,1]){

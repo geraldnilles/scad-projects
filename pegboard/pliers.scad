@@ -22,18 +22,13 @@ module plate(){
 }    
 
 module hook(){
-    depth = 20;
-    r = 2;
-    translate([0,-r,r])
-    hull(){
-        translate([10,,0,0])
-            sphere(r);
-        translate([-10,,0,0])
-            sphere(r);
-        translate([0,-depth,depth])
-            sphere(r);
-        translate([0,0,depth/2])
-            sphere(r);
+    $fn=3;
+    translate([0,-3,3.75])
+    rotate([90,270,0]){
+        cylinder(h=15,d=15);
+        translate([3.75,0,15])
+        cylinder(h=3,d=30);
+
     }
 }
 

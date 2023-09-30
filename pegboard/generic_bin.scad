@@ -6,7 +6,7 @@ $fn = 20;
 
 
 height_units = 2;
-width_units = 4;
+width_units = 3;
 length_mm = width_units*20;
 
 nozzle_thickness = 0.6;
