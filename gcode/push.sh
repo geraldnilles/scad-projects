@@ -2,7 +2,7 @@
 
 set -e
 
-mount /dev/sdb1 /mnt
+mount /dev/mmcblk0p1 /mnt
 rsync -ru . /mnt/
 sync
 umount /mnt
