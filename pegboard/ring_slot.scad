@@ -2,6 +2,8 @@
 include <pegboard.scad>;
 include <../primitives/chamfers.scad>;
 
+use <plate.scad>;
+
 
 $fn = 20;
 nozzle_width = 0.6;
@@ -10,18 +12,10 @@ wall_z = nozzle_width*wall_layers;
 
 depth = 35+wall_z;
 width = 75;
-height_units = 2;
+height_units = 3;
+width_units = 4;
 
 
-
-module plate(){
-    plate_thickness = wall_z;
-    plate_width = width+2*nozzle_width*wall_layers;
-    plate_height = hole_pitch*height_units+hole_diameter;
-    
-    translate([-plate_width/2,-plate_thickness,0])
-    chamfered_cube(plate_width,plate_thickness,plate_height,1.5);
-}    
 
 module hook(){
 
@@ -76,18 +70,14 @@ module hook(){
 
 
 module main(){        
-    plate();
+    //plate();
     hook();
+    plate(width_units,height_units,wall_z);
     
-    translate([0,0,hole_diameter/2]){
-        for ( x = [-1,0,1]){
-            translate([x*hole_pitch,0,0]){
-                peg_lower_support();
-                translate([0,0,hole_pitch*2])
-                    peg_hook();
-            }
-        }
-    }
+    /*
+    translate([-width/2,-depth,0])
+        #cube([width,depth-wall_z, 50]);
+    */
 
 }
 
