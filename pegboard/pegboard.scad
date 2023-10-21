@@ -64,7 +64,7 @@ module peg_hook(){
     // Add Fin support that is to be snipped off
     hull(){
         d1 = 1;
-        d2 = 0.6;
+        d2 = 1.2;
         translate([0,0,-hole_diameter/2])
             sphere(d=d2);
         translate([0,board_thickness,-hole_diameter/2])
