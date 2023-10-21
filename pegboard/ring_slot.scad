@@ -10,8 +10,8 @@ nozzle_width = 0.6;
 wall_layers = 10;
 wall_z = nozzle_width*wall_layers;
 
-depth = 35+wall_z;
-width = 75;
+depth = 38+wall_z;
+width = 82;
 height_units = 3;
 width_units = 4;
 
